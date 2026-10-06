@@ -9,7 +9,7 @@ from pydantic import BaseModel
 app = FastAPI(title="Smart SMS AI Backend")
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
 
 
 class GenerateRequest(BaseModel):
@@ -60,7 +60,7 @@ async def generate(data: GenerateRequest):
         )
 
     if response.status_code >= 400:
-        raise HTTPException(status_code=502, detail="Gemini request failed")
+        raise HTTPException(status_code=502, detail=f"Gemini request failed ({response.status_code}): {response.text[:800]}")
 
     try:
         text = response.json()["candidates"][0]["content"]["parts"][0]["text"]
