@@ -9,7 +9,7 @@ from pydantic import BaseModel
 app = FastAPI(title="Smart SMS AI Backend")
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
+GEMINI_MODEL = "gemini-3.8-flash"
 
 
 class GenerateRequest(BaseModel):
